@@ -1,30 +1,13 @@
+import _setup
 import streamlit as st
-
-if st.session_state.get("logged_in") == None:
-    st.session_state["logged_in"] = False
+from utils import initialize_logged_in, get_footer, check_login_state, set_header
 
 
-def login():
-    st.session_state.logged_in = True
+initialize_logged_in()
 
+set_header("About")
 
-def logout():
-    st.session_state.logged_in = False
-
-
-st.set_page_config(page_title="About")
-
-st.markdown("# About")
-st.sidebar.header("About")
-
-if st.session_state.logged_in:
-    st.sidebar.success("Logged in")
-    st.sidebar.button("Log out", key="logout", on_click=logout)
-else:
-    st.sidebar.warning("Not logged in")
-    st.sidebar.button("Log in", key="login", on_click=login)
-
-st.sidebar.write("This site is copyright Fake Company LLC Inc., 2024")
+check_login_state()
 
 st.markdown(
     """
@@ -40,20 +23,4 @@ st.markdown(
 
 st.image("./assets/fake_company.png")
 
-with st.expander("Company Info"):
-    st.write(
-        """
-        Fake Company LLC Inc. is located at 1600 Amphitheatre Parkway Mountain View, CA 94043
-    """
-    )
-
-with st.expander("Links"):
-    st.markdown(
-        """
-        [Google](https://google.com)
-
-        [Gemini](https://gemini.google.com)
-
-        [Streamlit Docs](https://docs.streamlit.io/)
-    """
-    )
+get_footer()
